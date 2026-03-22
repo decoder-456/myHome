@@ -4,9 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build:css": "npx @tailwindcss/cli -i ./public/input.css -o ./public/output.css --watch",
+    "build:css": "npx @tailwindcss/cli -i ./public/input.css -o ./public/output.css",
+    "dev:css": "npx @tailwindcss/cli -i ./public/input.css -o ./public/output.css --watch",
     "server": "nodemon app.js",
-    "start": "concurrently \"npm run server\" \"npm run build:css\""
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
