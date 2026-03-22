@@ -44,7 +44,7 @@ const signupValidators = [
   body("password")
     .trim()
     .isLength({ min: 8, max: 64 })
-    .withMessage("Password must be 8–64 characters")
+    .withMessage("Password must be 8-64 characters")
     .matches(/[A-Z]/)
     .withMessage("Must contain at least one uppercase letter")
     .matches(/[a-z]/)
