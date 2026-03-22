@@ -1,133 +1,159 @@
 <%- include('../partials/head') %>
 </head>
 
-<body class="bg-gray-50">
-  <%- include('../partials/nav') %>
+<body class="min-h-screen bg-gradient-to-br from-purple-50 via-rose-50 to-orange-50">
 
-  <!-- Hero Image -->
-  <div class="w-full h-[55vh] overflow-hidden relative">
-    <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>" class="w-full h-full object-cover"/>
-    <div class="absolute inset-0" style="background:linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);"></div>
+<%- include('../partials/nav') %>
 
-    <a href="/explore"
-      class="absolute top-5 left-5 bg-white/90 backdrop-blur-sm text-gray-700 hover:text-gray-900 text-sm font-medium px-4 py-2 rounded-full shadow transition flex items-center gap-1.5">
-      ← Back
-    </a>
+<!-- HERO -->
+<div class="relative w-full h-[60vh] overflow-hidden">
+  <img src="<%= home.photoUrl %>" 
+       class="w-full h-full object-cover scale-105">
 
-    <div class="absolute bottom-6 left-6 right-6 max-w-5xl mx-auto">
-      <div class="flex items-center gap-2 mb-2">
-        <span class="bg-white/20 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1 rounded-full border border-white/30">
-          🏠 Entire home
-        </span>
-      </div>
-      <h1 class="text-3xl sm:text-4xl font-bold text-white drop-shadow-lg"><%= home.houseName %></h1>
-      <div class="flex items-center gap-3 mt-2 text-white/90 text-sm">
-        <span class="flex items-center gap-1">⭐ <strong><%= home.rating %></strong> / 5</span>
-        <span class="opacity-40">·</span>
-        <span>📍 <%= home.location %></span>
-      </div>
+  <!-- overlay -->
+  <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+
+  <!-- Back -->
+  <a href="/explore"
+    class="absolute top-6 left-6 bg-white/80 backdrop-blur-md px-4 py-2 rounded-full text-sm font-medium shadow hover:bg-white transition">
+    ← Back
+  </a>
+
+  <!-- Title -->
+  <div class="absolute bottom-8 left-6 right-6 max-w-5xl mx-auto text-white">
+    <h1 class="text-4xl font-bold mb-2 drop-shadow-lg">
+      <%= home.houseName %>
+    </h1>
+
+    <div class="flex items-center gap-3 text-sm text-white/90">
+      <span>⭐ <strong><%= home.rating %></strong></span>
+      <span class="opacity-40">·</span>
+      <span>📍 <%= home.location %></span>
     </div>
   </div>
+</div>
 
-  <main class="container mx-auto px-4 max-w-5xl py-10">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+<main class="container mx-auto px-6 py-12 max-w-6xl">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
 
-      <!-- Left -->
-      <div class="md:col-span-2 space-y-8">
+    <!-- LEFT -->
+    <div class="md:col-span-2 space-y-8">
 
-        <!-- Stat pills -->
-        <div class="grid grid-cols-3 gap-3">
-          <div class="rounded-2xl p-4 text-center border" style="background:#fff1f2; border-color:#fecdd3;">
-            <p class="text-xl mb-1">📍</p>
-            <p class="text-xs text-rose-400 uppercase tracking-wide font-medium">Location</p>
-            <p class="text-sm font-bold text-gray-800 mt-0.5 truncate"><%= home.location %></p>
-          </div>
-          <div class="rounded-2xl p-4 text-center border" style="background:#fffbeb; border-color:#fde68a;">
-            <p class="text-xl mb-1">⭐</p>
-            <p class="text-xs text-amber-500 uppercase tracking-wide font-medium">Rating</p>
-            <p class="text-sm font-bold text-gray-800 mt-0.5"><%= home.rating %> / 5</p>
-          </div>
-          <div class="rounded-2xl p-4 text-center border" style="background:#f0fdf4; border-color:#bbf7d0;">
-            <p class="text-xl mb-1">💰</p>
-            <p class="text-xs text-emerald-500 uppercase tracking-wide font-medium">Per Night</p>
-            <p class="text-sm font-bold text-gray-800 mt-0.5">₹<%= home.price %></p>
-          </div>
+      <!-- STATS -->
+      <div class="grid grid-cols-3 gap-4">
+
+        <div class="bg-white/80 backdrop-blur-lg rounded-2xl p-5 text-center shadow border border-gray-100">
+          <p class="text-2xl mb-1">📍</p>
+          <p class="text-xs text-gray-400 uppercase">Location</p>
+          <p class="text-sm font-semibold text-gray-800 truncate">
+            <%= home.location %>
+          </p>
         </div>
 
-        <!-- Description -->
-        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
-          <h2 class="text-lg font-bold text-gray-900 mb-3">About this place</h2>
-          <% if (home.description) { %>
-            <p class="text-gray-600 leading-relaxed text-sm"><%= home.description %></p>
-          <% } else { %>
-            <p class="text-gray-400 italic text-sm">No description provided.</p>
-          <% } %>
+        <div class="bg-white/80 backdrop-blur-lg rounded-2xl p-5 text-center shadow border border-gray-100">
+          <p class="text-2xl mb-1">⭐</p>
+          <p class="text-xs text-gray-400 uppercase">Rating</p>
+          <p class="text-sm font-semibold text-gray-800">
+            <%= home.rating %> / 5
+          </p>
         </div>
 
-        <!-- Amenities -->
-        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
-          <h2 class="text-lg font-bold text-gray-900 mb-4">What this place offers</h2>
-          <div class="grid grid-cols-2 gap-y-3 gap-x-4">
-            <% [['🛜','Free WiFi'],['🅿️','Free parking'],['❄️','Air conditioning'],['🍳','Kitchen'],['🧺','Washer'],['📺','TV']].forEach(([icon,label]) => { %>
-              <div class="flex items-center gap-3 text-sm text-gray-600 bg-gray-50 rounded-xl px-3 py-2.5">
-                <span class="text-lg"><%= icon %></span> <%= label %>
-              </div>
-            <% }) %>
-          </div>
+        <div class="bg-white/80 backdrop-blur-lg rounded-2xl p-5 text-center shadow border border-gray-100">
+          <p class="text-2xl mb-1">💰</p>
+          <p class="text-xs text-gray-400 uppercase">Price</p>
+          <p class="text-sm font-semibold text-purple-600">
+            ₹<%= home.price %>
+          </p>
         </div>
 
       </div>
 
-      <!-- Right: Booking Card -->
-      <div class="md:col-span-1">
-        <div class="bg-white border border-gray-200 rounded-3xl shadow-xl p-6 sticky top-24">
-          <div class="mb-5">
-            <p class="text-3xl font-bold text-gray-900">
-              ₹<%= home.price %>
-              <span class="text-base font-normal text-gray-400">/ night</span>
-            </p>
-            <div class="flex items-center gap-1.5 mt-1">
-              <span class="text-amber-400 text-sm">⭐</span>
-              <span class="font-semibold text-gray-700 text-sm"><%= home.rating %></span>
-              <span class="text-gray-300 text-xs">·</span>
-              <span class="text-xs text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full font-medium">Excellent</span>
+      <!-- DESCRIPTION -->
+      <div class="bg-white/80 backdrop-blur-lg rounded-3xl p-6 shadow-lg border border-gray-100">
+        <h2 class="text-lg font-semibold text-gray-900 mb-3">
+          About this place
+        </h2>
+
+        <% if (home.description) { %>
+          <p class="text-gray-600 leading-relaxed text-sm">
+            <%= home.description %>
+          </p>
+        <% } else { %>
+          <p class="text-gray-400 italic text-sm">
+            No description provided.
+          </p>
+        <% } %>
+      </div>
+
+      <!-- AMENITIES -->
+      <div class="bg-white/80 backdrop-blur-lg rounded-3xl p-6 shadow-lg border border-gray-100">
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">
+          What this place offers
+        </h2>
+
+        <div class="grid grid-cols-2 gap-3">
+          <% [['🛜','Free WiFi'],['🅿️','Parking'],['❄️','AC'],['🍳','Kitchen'],['🧺','Washer'],['📺','TV']].forEach(([icon,label]) => { %>
+            <div class="flex items-center gap-3 text-sm bg-gray-50 rounded-xl px-3 py-2">
+              <span><%= icon %></span>
+              <span class="text-gray-600"><%= label %></span>
             </div>
-          </div>
-
-          <!-- Date pickers -->
-          <div class="border border-gray-200 rounded-2xl overflow-hidden mb-4">
-            <div class="grid grid-cols-2 divide-x divide-gray-200">
-              <div class="p-3">
-                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Check-in</p>
-                <input type="date" class="w-full text-gray-700 text-sm mt-1 outline-none bg-transparent cursor-pointer"/>
-              </div>
-              <div class="p-3">
-                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Check-out</p>
-                <input type="date" class="w-full text-gray-700 text-sm mt-1 outline-none bg-transparent cursor-pointer"/>
-              </div>
-            </div>
-          </div>
-
-          <button class="w-full text-white py-3.5 rounded-2xl font-semibold transition shadow-md mb-3 text-sm hover:opacity-90"
-            style="background: linear-gradient(135deg,#e11d48,#f97316);">
-            Reserve Now
-          </button>
-
-          <% if (userType === 'guest') { %>
-          <form action="/favourite" method="POST">
-            <input type="hidden" name="homeId" value="<%= home._id %>">
-            <button type="submit"
-              class="w-full border-2 border-rose-200 hover:bg-rose-50 text-rose-500 py-3 rounded-2xl font-medium transition text-sm">
-              ❤️ Save to Favourites
-            </button>
-          </form>
-          <% } %>
-
-          <p class="text-center text-xs text-gray-300 mt-4">You won't be charged yet</p>
+          <% }) %>
         </div>
       </div>
 
     </div>
-  </main>
+
+    <!-- RIGHT (BOOKING CARD) -->
+    <div>
+      <div class="bg-white/90 backdrop-blur-xl rounded-3xl p-6 shadow-2xl border border-gray-100 sticky top-24">
+
+        <!-- Price -->
+        <p class="text-3xl font-bold text-gray-900 mb-2">
+          ₹<%= home.price %>
+          <span class="text-sm text-gray-400">/ night</span>
+        </p>
+
+        <div class="flex items-center gap-2 mb-5">
+          <span class="text-amber-400">⭐</span>
+          <span class="font-semibold text-gray-700 text-sm">
+            <%= home.rating %>
+          </span>
+        </div>
+
+        <!-- Dates -->
+        <div class="border rounded-2xl overflow-hidden mb-4">
+          <div class="grid grid-cols-2 divide-x">
+            <input type="date" class="p-3 text-sm outline-none">
+            <input type="date" class="p-3 text-sm outline-none">
+          </div>
+        </div>
+
+        <!-- Reserve -->
+        <button class="w-full py-3 rounded-xl text-white font-semibold mb-3 shadow-md hover:opacity-90"
+          style="background: linear-gradient(135deg,#8b5cf6,#f43f5e);">
+          Reserve Now
+        </button>
+
+        <!-- Favourite -->
+        <% if (userType === 'guest') { %>
+        <form action="/favourite" method="POST">
+          <input type="hidden" name="homeId" value="<%= home._id %>">
+
+          <button class="w-full py-3 rounded-xl border border-rose-200 text-rose-500 hover:bg-rose-50 transition">
+            ❤️ Save to Favourites
+          </button>
+        </form>
+        <% } %>
+
+        <p class="text-xs text-gray-400 text-center mt-4">
+          You won't be charged yet
+        </p>
+
+      </div>
+    </div>
+
+  </div>
+</main>
+
 </body>
 </html>
