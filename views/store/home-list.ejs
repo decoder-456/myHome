@@ -1,0 +1,79 @@
+<%- include('../partials/head') %>
+</head>
+
+<body class="bg-gray-50">
+
+<%- include('../partials/nav') %>
+
+<main class="container mx-auto px-6 py-10">
+
+  <!-- Hero -->
+  <div class="text-center mb-10">
+    <h1 class="text-4xl font-bold text-gray-900 mb-2">Find your next stay</h1>
+    <p class="text-gray-500 text-lg">Discover unique homes around the world</p>
+  </div>
+
+  <% if (homes.length === 0) { %>
+    <div class="text-center py-20 text-gray-400">
+      <p class="text-6xl mb-4">🏚️</p>
+      <p class="text-xl">No homes listed yet.</p>
+      <a href="/host/add-home" class="mt-4 inline-block text-red-500 hover:underline">Be the first to list one →</a>
+    </div>
+  <% } else { %>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <% homes.forEach(home => { %>
+
+      <div class="relative group">
+
+        <!-- Favourite Button -->
+        <form action="/favourite" method="POST" class="absolute top-3 right-3 z-10">
+          <input type="hidden" name="homeId" value="<%= home._id %>">
+          <button type="submit" onclick="event.stopPropagation()"
+            class="bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-md hover:bg-white hover:scale-110 transition-all duration-200 text-lg">
+            ❤️
+          </button>
+        </form>
+
+        <!-- Card -->
+        <a href="/store/home/<%= home._id %>">
+          <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+
+            <!-- Image -->
+            <div class="overflow-hidden rounded-t-2xl">
+              <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>"
+                class="w-full h-52 object-cover group-hover:scale-105 transition duration-500">
+            </div>
+
+            <!-- Content -->
+            <div class="p-4">
+              <div class="flex justify-between items-start mb-1">
+                <h3 class="text-base font-semibold text-gray-900 truncate pr-2">
+                  <%= home.houseName %>
+                </h3>
+                <div class="flex items-center gap-1 text-sm text-gray-700 shrink-0">
+                  ⭐ <span><%= home.rating %></span>
+                </div>
+              </div>
+
+              <p class="text-gray-400 text-sm mb-3 truncate">📍 <%= home.location %></p>
+
+              <p class="text-gray-900 text-sm font-semibold">
+                ₹<%= home.price %> <span class="font-normal text-gray-400">/ night</span>
+              </p>
+            </div>
+
+          </div>
+        </a>
+
+      </div>
+
+    <% }) %>
+  </div>
+
+  <% } %>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<%- include('../partials/head') %>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+<%- include('../partials/nav') %>
+
+<main class="container mx-auto px-6 py-10">
+
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-bold text-gray-900 mb-2">❤️ Saved Homes</h1>
+    <p class="text-gray-400 text-base">Homes you've saved for later</p>
+  </div>
+
+  <% if (homes.length === 0) { %>
+    <div class="text-center py-24">
+      <p class="text-7xl mb-5">🤍</p>
+      <p class="text-xl font-medium text-gray-400 mb-2">No saved homes yet</p>
+      <p class="text-sm text-gray-300 mb-8">Explore homes and tap ❤️ to save them here</p>
+      <a href="/explore"
+        class="inline-block bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-2xl text-sm font-semibold transition shadow-sm">
+        Explore homes
+      </a>
+    </div>
+  <% } else { %>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <% homes.forEach(home => { %>
+
+      <div class="relative group">
+
+        <form action="/del-favourite/<%= home._id %>" method="POST" class="absolute top-3 right-3 z-10">
+          <button type="submit" onclick="event.stopPropagation()" title="Remove from saved"
+            class="bg-white/90 backdrop-blur-sm p-2.5 rounded-full shadow-md hover:bg-red-50 hover:scale-110 transition-all duration-200">
+            ❤️
+          </button>
+        </form>
+
+        <a href="/store/home/<%= home._id %>">
+          <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div class="overflow-hidden">
+              <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>"
+                class="w-full h-52 object-cover group-hover:scale-105 transition duration-500">
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-start mb-1">
+                <h3 class="text-sm font-bold text-gray-900 truncate pr-2"><%= home.houseName %></h3>
+                <span class="text-xs text-gray-500 shrink-0">⭐ <%= home.rating %></span>
+              </div>
+              <p class="text-gray-400 text-xs mb-3 truncate">📍 <%= home.location %></p>
+              <p class="text-sm font-bold text-red-500">
+                ₹<%= home.price %> <span class="font-normal text-gray-400 text-xs">/ night</span>
+              </p>
+            </div>
+          </div>
+        </a>
+
+      </div>
+
+    <% }) %>
+  </div>
+
+  <% } %>
+
+</main>
+</body>
+</html>

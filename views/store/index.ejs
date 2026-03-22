@@ -1,0 +1,121 @@
+<%- include('../partials/head') %>
+</head>
+
+<body class="bg-white">
+<%- include('../partials/nav') %>
+
+<!-- Hero -->
+<section class="relative overflow-hidden bg-gradient-to-br from-rose-50 via-white to-orange-50 py-24 px-6">
+  <div class="container mx-auto max-w-3xl text-center relative z-10">
+    <span class="inline-block bg-red-100 text-red-500 text-xs font-semibold px-3 py-1 rounded-full mb-5 tracking-wide uppercase">
+      Trusted by thousands of travellers
+    </span>
+    <h1 class="text-5xl sm:text-6xl font-extrabold text-gray-900 mb-5 leading-tight tracking-tight">
+      Find your next<br><span class="text-red-500">perfect stay</span>
+    </h1>
+    <p class="text-gray-500 text-lg sm:text-xl mb-10 max-w-xl mx-auto">
+      Discover unique homes and experiences around the world — from cozy cottages to luxury villas.
+    </p>
+    <% if (!isLoggedIn) { %>
+      <div class="flex justify-center gap-3 flex-wrap">
+        <a href="/signup" class="bg-red-500 hover:bg-red-600 text-white px-8 py-3.5 rounded-2xl font-semibold text-base transition shadow-md hover:shadow-lg">
+          Get Started — It's Free
+        </a>
+        <a href="/login" class="border-2 border-gray-200 hover:border-gray-300 text-gray-700 px-8 py-3.5 rounded-2xl font-semibold text-base transition hover:bg-gray-50">
+          Log In
+        </a>
+      </div>
+    <% } else { %>
+      <a href="/explore" class="inline-block bg-red-500 hover:bg-red-600 text-white px-10 py-3.5 rounded-2xl font-semibold text-base transition shadow-md hover:shadow-lg">
+        Explore Homes →
+      </a>
+    <% } %>
+  </div>
+  <!-- Decorative blobs -->
+  <div class="absolute top-0 right-0 w-72 h-72 bg-red-100 rounded-full opacity-30 blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+  <div class="absolute bottom-0 left-0 w-64 h-64 bg-orange-100 rounded-full opacity-30 blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+</section>
+
+<!-- Stats Bar -->
+<% if (!isLoggedIn) { %>
+<div class="border-y border-gray-100 bg-white py-6">
+  <div class="container mx-auto px-6 flex justify-center gap-12 flex-wrap text-center">
+    <div>
+      <p class="text-2xl font-bold text-gray-900"><%= homes.length %>+</p>
+      <p class="text-sm text-gray-400 mt-0.5">Homes listed</p>
+    </div>
+    <div>
+      <p class="text-2xl font-bold text-gray-900">100%</p>
+      <p class="text-sm text-gray-400 mt-0.5">Verified hosts</p>
+    </div>
+    <div>
+      <p class="text-2xl font-bold text-gray-900">24/7</p>
+      <p class="text-sm text-gray-400 mt-0.5">Support</p>
+    </div>
+  </div>
+</div>
+<% } %>
+
+<!-- Featured Homes -->
+<section class="container mx-auto px-6 py-16">
+  <div class="flex justify-between items-end mb-8">
+    <div>
+      <h2 class="text-2xl font-bold text-gray-900">Featured Homes</h2>
+      <p class="text-gray-400 text-sm mt-1">Hand-picked stays for every traveller</p>
+    </div>
+    <% if (!isLoggedIn) { %>
+      <a href="/signup" class="text-sm text-red-500 hover:underline font-medium hidden sm:block">
+        Sign up to save & book →
+      </a>
+    <% } %>
+  </div>
+
+  <% if (homes.length === 0) { %>
+    <div class="text-center py-24 text-gray-300">
+      <p class="text-7xl mb-5">🏚️</p>
+      <p class="text-xl font-medium text-gray-400">No homes listed yet</p>
+    </div>
+  <% } else { %>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <% homes.forEach(home => { %>
+        <a href="<%= isLoggedIn ? '/store/home/' + home._id : '/login' %>" class="group block">
+          <div class="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div class="overflow-hidden relative">
+              <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>"
+                class="w-full h-52 object-cover group-hover:scale-105 transition duration-500">
+              <% if (!isLoggedIn) { %>
+                <div class="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                  <span class="bg-white text-gray-800 text-xs font-semibold px-3 py-1.5 rounded-full shadow">🔒 Login to view</span>
+                </div>
+              <% } %>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-start mb-1">
+                <h3 class="text-sm font-semibold text-gray-900 truncate pr-2"><%= home.houseName %></h3>
+                <span class="text-xs text-gray-500 shrink-0 flex items-center gap-0.5">⭐ <%= home.rating %></span>
+              </div>
+              <p class="text-gray-400 text-xs mb-3 truncate">📍 <%= home.location %></p>
+              <p class="text-sm font-bold text-gray-900">
+                ₹<%= home.price %> <span class="font-normal text-gray-400 text-xs">/ night</span>
+              </p>
+            </div>
+          </div>
+        </a>
+      <% }) %>
+    </div>
+  <% } %>
+</section>
+
+<!-- CTA Banner -->
+<% if (!isLoggedIn) { %>
+<section class="mx-6 mb-16 rounded-3xl bg-gradient-to-r from-red-500 to-rose-600 text-white py-16 px-8 text-center shadow-xl">
+  <h2 class="text-3xl font-bold mb-3">Ready to find your perfect home?</h2>
+  <p class="text-red-100 mb-8 text-base max-w-md mx-auto">Join thousands of travellers discovering unique stays on AirBnB every day.</p>
+  <a href="/signup" class="inline-block bg-white text-red-500 hover:bg-red-50 px-8 py-3 rounded-2xl font-semibold transition shadow-md">
+    Sign Up for Free
+  </a>
+</section>
+<% } %>
+
+</body>
+</html>
