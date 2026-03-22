@@ -51,7 +51,7 @@ const fileFilter = (req, file, cb) => {
   }
 };
 app.use(multer({ storage, fileFilter }).single("photoUrl"));
-app.use("/uploads", express.static(path.join(rootDir, "uploads")));
+app.use("/uploads", express.static(uploadPath));
 app.set("view engine", "ejs");
 app.set("views", "views");
 app.use(express.urlencoded({ extended: true }));
