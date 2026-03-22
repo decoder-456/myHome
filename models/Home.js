@@ -17,13 +17,15 @@ const homeSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-
     rating: {
       type: Number,
       default: 0,
     },
-
     photoUrl: {
+      type: String,
+      required: true,
+    },
+    publicId: {
       type: String,
       required: true,
     },
