@@ -1,28 +1,39 @@
 <%- include('../partials/head') %>
 </head>
 
-<body class="bg-gray-50 min-h-screen">
+<body class="min-h-screen bg-gradient-to-br from-purple-50 via-rose-50 to-orange-50">
+
 <%- include('../partials/nav') %>
 
 <!-- Header -->
-<div style="background: linear-gradient(135deg,#fff7ed 0%,#fef3c7 100%);" class="py-10 px-6 border-b border-orange-100">
+<div class="py-12 px-6 border-b border-gray-100 bg-white/60 backdrop-blur-md">
   <div class="container mx-auto max-w-2xl">
-    <a href="/host/home-list" class="text-sm text-gray-400 hover:text-gray-600 transition flex items-center gap-1 mb-3">
+
+    <a href="/host/home-list"
+      class="text-sm text-gray-400 hover:text-gray-600 transition flex items-center gap-2 mb-4">
       ← Back to listings
     </a>
-    <h1 class="text-3xl font-extrabold text-gray-900">
-      <%= editing ? "Edit listing" : "List your home" %>
+
+    <h1 class="text-4xl font-bold text-gray-900 tracking-tight">
+      <%= editing ? "Edit your listing ✏️" : "List your home 🏡" %>
     </h1>
-    <p class="text-gray-500 text-sm mt-1">
-      <%= editing ? "Update your listing details." : "Share your space with travellers." %>
+
+    <p class="text-gray-500 text-sm mt-2">
+      <%= editing ? "Update your listing details easily." : "Share your space with travelers around the world." %>
     </p>
+
   </div>
 </div>
 
-<main class="container mx-auto px-4 py-10 max-w-2xl">
-  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-8">
+<main class="container mx-auto px-4 py-12 max-w-2xl">
 
-    <form action="<%= editing ? '/edit-home' : '/add-home' %>" method="POST" enctype="multipart/form-data" class="space-y-5">
+  <!-- Card -->
+  <div class="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl border border-gray-100 p-8">
+
+    <form action="<%= editing ? '/edit-home' : '/add-home' %>"
+          method="POST"
+          enctype="multipart/form-data"
+          class="space-y-6">
 
       <% if (editing) { %>
         <input type="hidden" name="id" value="<%= home._id %>">
@@ -30,80 +41,90 @@
 
       <!-- House Name -->
       <div>
-        <label class="block text-sm font-semibold text-gray-700 mb-1.5">
-          House Name <span class="text-rose-500">*</span>
+        <label class="block text-sm font-medium text-gray-600 mb-1">
+          House Name
         </label>
-        <input type="text" name="houseName" value="<%= editing ? home.houseName : '' %>" required
-          placeholder="e.g. Cozy Beach House in Goa"
-          class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-300 transition"/>
+        <input type="text" name="houseName"
+          value="<%= editing ? home.houseName : '' %>" required
+          placeholder="Cozy Beach House in Goa"
+          class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-purple-400 outline-none transition"/>
       </div>
 
       <!-- Location -->
       <div>
-        <label class="block text-sm font-semibold text-gray-700 mb-1.5">
-          Location <span class="text-rose-500">*</span>
+        <label class="block text-sm font-medium text-gray-600 mb-1">
+          Location
         </label>
-        <input type="text" name="location" value="<%= editing ? home.location : '' %>" required
-          placeholder="e.g. Goa, India"
-          class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-300 transition"/>
+        <input type="text" name="location"
+          value="<%= editing ? home.location : '' %>" required
+          placeholder="Goa, India"
+          class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-purple-400 outline-none transition"/>
       </div>
 
       <!-- Price & Rating -->
       <div class="grid grid-cols-2 gap-4">
+
         <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1.5">
-            Price / Night <span class="text-rose-500">*</span>
+          <label class="block text-sm font-medium text-gray-600 mb-1">
+            Price / Night
           </label>
           <div class="relative">
-            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-medium">₹</span>
-            <input type="number" name="price" value="<%= editing ? home.price : '' %>" required min="1"
-              class="w-full pl-8 pr-4 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-300"/>
+            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">₹</span>
+            <input type="number" name="price"
+              value="<%= editing ? home.price : '' %>" required min="1"
+              class="w-full pl-8 pr-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-purple-400 outline-none"/>
           </div>
         </div>
+
         <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1.5">
-            Rating (0–5) <span class="text-rose-500">*</span>
+          <label class="block text-sm font-medium text-gray-600 mb-1">
+            Rating
           </label>
-          <input type="number" name="rating" value="<%= editing ? home.rating : '' %>" required
-            min="0" max="5" step="0.1"
-            class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-300"/>
+          <input type="number" name="rating"
+            value="<%= editing ? home.rating : '' %>" required min="0" max="5" step="0.1"
+            class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-purple-400 outline-none"/>
         </div>
+
       </div>
 
       <!-- Photo -->
       <div>
-        <label class="block text-sm font-semibold text-gray-700 mb-1.5">
-          Photo <% if (!editing) { %><span class="text-rose-500">*</span><% } %>
+        <label class="block text-sm font-medium text-gray-600 mb-2">
+          Photo
         </label>
+
         <% if (editing && home.photoUrl) { %>
-          <div class="mb-3">
-            <img src="<%= home.photoUrl %>" alt="Current photo"
-              class="h-36 w-full object-cover rounded-xl border border-gray-200"/>
-            <p class="text-xs text-gray-400 mt-1.5">Upload a new image to replace the current one</p>
-          </div>
+          <img src="<%= home.photoUrl %>"
+            class="h-40 w-full object-cover rounded-xl mb-3 shadow-sm border"/>
         <% } %>
-        <input type="file" name="photoUrl" accept="image/jpeg,image/jpg,image/png"
+
+        <input type="file" name="photoUrl"
+          accept="image/jpeg,image/jpg,image/png"
           <%= editing ? '' : 'required' %>
-          class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-300 file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-orange-50 file:text-orange-600 hover:file:bg-orange-100"/>
+          class="w-full px-4 py-2 border border-gray-200 rounded-xl bg-gray-50 focus:ring-2 focus:ring-purple-400 file:mr-3 file:px-3 file:py-1 file:rounded-lg file:bg-purple-50 file:text-purple-600"/>
       </div>
 
       <!-- Description -->
       <div>
-        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Description</label>
+        <label class="block text-sm font-medium text-gray-600 mb-1">
+          Description
+        </label>
         <textarea name="description" rows="4"
-          placeholder="Describe what makes your place special..."
-          class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-300 resize-none"><%= editing ? home.description : '' %></textarea>
+          placeholder="What makes your place special?"
+          class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-purple-400 outline-none resize-none"><%= editing ? home.description : '' %></textarea>
       </div>
 
       <!-- Submit -->
       <button type="submit"
-        class="w-full text-white py-3.5 rounded-2xl font-semibold text-sm shadow-md hover:opacity-90 transition"
-        style="background: linear-gradient(135deg,#f97316,#e11d48);">
+        class="w-full py-3.5 rounded-xl text-white font-semibold bg-gradient-to-r from-purple-500 via-rose-500 to-orange-400 hover:opacity-90 active:scale-[0.98] transition shadow-lg">
         <%= editing ? "Save Changes" : "Publish Listing" %>
       </button>
 
     </form>
+
   </div>
+
 </main>
+
 </body>
 </html>
