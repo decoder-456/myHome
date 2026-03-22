@@ -6,8 +6,8 @@
   "scripts": {
     "build:css": "npx @tailwindcss/cli -i ./public/input.css -o ./public/output.css",
     "dev:css": "npx @tailwindcss/cli -i ./public/input.css -o ./public/output.css --watch",
-    "server": "node app.js",
-    "start": "nodemon app.js"
+    "server": "nodemon app.js",
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
