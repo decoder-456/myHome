@@ -7,7 +7,7 @@ const multer = require("multer");
 const mongoose = require("mongoose");
 
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
-const cloudinary = require("./utils/cloudinary");
+const cloudinary = require("./utils/claudinary");
 
 const MongoDBStore = require("connect-mongodb-session")(session);
 
@@ -75,14 +75,6 @@ const fileFilter = (req, file, cb) => {
 
 // MULTER MIDDLEWARE
 app.use(multer({ storage, fileFilter }).single("photoUrl"));
-
-// DEBUG (optional - remove in production)
-app.use((req, res, next) => {
-  if (req.file) {
-    console.log("📸 Uploaded file:", req.file.path);
-  }
-  next();
-});
 
 // =======================
 // VIEW ENGINE & MIDDLEWARE
