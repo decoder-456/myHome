@@ -7,7 +7,7 @@ const multer = require("multer");
 const mongoose = require("mongoose");
 
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
-const cloudinary = require("./utils/claudinary");
+const cloudinary = require("./utils/cloudinary");
 
 const MongoDBStore = require("connect-mongodb-session")(session);
 
