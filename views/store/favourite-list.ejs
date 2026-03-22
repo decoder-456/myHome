@@ -4,20 +4,23 @@
 <body class="bg-gray-50 min-h-screen">
 <%- include('../partials/nav') %>
 
-<main class="container mx-auto px-6 py-10">
-
-  <div class="text-center mb-12">
-    <h1 class="text-4xl font-bold text-gray-900 mb-2">❤️ Saved Homes</h1>
-    <p class="text-gray-400 text-base">Homes you've saved for later</p>
+<!-- Header -->
+<div style="background: linear-gradient(135deg,#fff1f2 0%,#fff7ed 100%);" class="py-10 px-6 border-b border-rose-100">
+  <div class="container mx-auto max-w-6xl">
+    <h1 class="text-3xl font-extrabold text-gray-900">Saved Homes</h1>
+    <p class="text-gray-500 text-sm mt-1">Homes you've saved for later</p>
   </div>
+</div>
+
+<main class="container mx-auto px-6 py-10 max-w-6xl">
 
   <% if (homes.length === 0) { %>
-    <div class="text-center py-24">
-      <p class="text-7xl mb-5">🤍</p>
-      <p class="text-xl font-medium text-gray-400 mb-2">No saved homes yet</p>
-      <p class="text-sm text-gray-300 mb-8">Explore homes and tap ❤️ to save them here</p>
-      <a href="/explore"
-        class="inline-block bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-2xl text-sm font-semibold transition shadow-sm">
+    <div class="flex flex-col items-center justify-center py-28 text-center">
+      <div class="w-20 h-20 rounded-3xl flex items-center justify-center text-4xl mb-5" style="background:#fff1f2;">🤍</div>
+      <p class="text-xl font-semibold text-gray-700 mb-2">No saved homes yet</p>
+      <p class="text-sm text-gray-400 mb-8">Explore homes and tap ❤️ to save them here</p>
+      <a href="/explore" class="text-white px-6 py-3 rounded-2xl text-sm font-semibold transition shadow-md hover:opacity-90"
+        style="background: linear-gradient(135deg,#e11d48,#f97316);">
         Explore homes
       </a>
     </div>
@@ -27,33 +30,34 @@
     <% homes.forEach(home => { %>
 
       <div class="relative group">
-
         <form action="/del-favourite/<%= home._id %>" method="POST" class="absolute top-3 right-3 z-10">
-          <button type="submit" onclick="event.stopPropagation()" title="Remove from saved"
-            class="bg-white/90 backdrop-blur-sm p-2.5 rounded-full shadow-md hover:bg-red-50 hover:scale-110 transition-all duration-200">
+          <button type="submit" title="Remove from saved"
+            class="bg-white/90 backdrop-blur-sm p-2.5 rounded-full shadow-md hover:bg-rose-50 hover:scale-110 transition-all duration-200 text-rose-500 text-sm font-bold">
             ❤️
           </button>
         </form>
 
         <a href="/store/home/<%= home._id %>">
-          <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-            <div class="overflow-hidden">
+          <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div class="relative h-52 overflow-hidden">
               <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>"
-                class="w-full h-52 object-cover group-hover:scale-105 transition duration-500">
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+              <span class="absolute top-3 left-3 bg-white/95 text-amber-500 text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
+                ⭐ <%= home.rating %>
+              </span>
             </div>
             <div class="p-4">
-              <div class="flex justify-between items-start mb-1">
-                <h3 class="text-sm font-bold text-gray-900 truncate pr-2"><%= home.houseName %></h3>
-                <span class="text-xs text-gray-500 shrink-0">⭐ <%= home.rating %></span>
-              </div>
+              <h3 class="text-sm font-bold text-gray-900 truncate mb-1"><%= home.houseName %></h3>
               <p class="text-gray-400 text-xs mb-3 truncate">📍 <%= home.location %></p>
-              <p class="text-sm font-bold text-red-500">
-                ₹<%= home.price %> <span class="font-normal text-gray-400 text-xs">/ night</span>
-              </p>
+              <div class="flex items-center justify-between">
+                <p class="text-sm font-bold text-gray-900">
+                  ₹<%= home.price %> <span class="font-normal text-gray-400 text-xs">/ night</span>
+                </p>
+                <span class="text-xs text-rose-500 bg-rose-50 px-2 py-0.5 rounded-full font-medium">Saved</span>
+              </div>
             </div>
           </div>
         </a>
-
       </div>
 
     <% }) %>

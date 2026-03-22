@@ -10,7 +10,6 @@ exports.showHome = async (req, res) => {
       currentPage: "home",
     });
   } catch (err) {
-    console.log("❌ Error fetching homes:", err.message);
     res.status(500).send("Server Error");
   }
 };
@@ -25,23 +24,19 @@ exports.exploreHome = async (req, res) => {
       currentPage: "explore",
     });
   } catch (err) {
-    console.log("❌ Error fetching homes:", err.message);
     res.status(500).send("Server Error");
   }
 };
 
 exports.getFavourite = async (req, res) => {
   try {
-    const user = await User.findById(req.session.user.id).populate(
-      "favourites",
-    );
+    const user = await User.findById(req.session.user.id).populate("favourites");
     res.render("store/favourite-list", {
       homes: user.favourites,
-      pageTitle: "Favourites",
+      pageTitle: "Saved Homes",
       currentPage: "favourite",
     });
   } catch (err) {
-    console.log("❌ Error fetching favourites:", err.message);
     res.status(500).send("Server Error");
   }
 };
@@ -57,7 +52,6 @@ exports.postFavourite = async (req, res) => {
     }
     res.redirect("/store/favourite-home");
   } catch (err) {
-    console.log("❌ Error adding favourite:", err.message);
     res.status(500).send("Something went wrong");
   }
 };
@@ -65,12 +59,9 @@ exports.postFavourite = async (req, res) => {
 exports.postdelFavourite = async (req, res) => {
   const homeId = req.params.homeId;
   try {
-    await User.findByIdAndUpdate(req.session.user.id, {
-      $pull: { favourites: homeId },
-    });
+    await User.findByIdAndUpdate(req.session.user.id, { $pull: { favourites: homeId } });
     res.redirect("/store/favourite-home");
   } catch (err) {
-    console.log("❌ Error removing favourite:", err.message);
     res.status(500).send("Something went wrong");
   }
 };
@@ -84,24 +75,20 @@ exports.bookedHome = async (req, res) => {
       currentPage: "bookingHome",
     });
   } catch (err) {
-    console.log("❌ Error fetching booked homes:", err.message);
     res.status(500).send("Server Error");
   }
 };
 
-exports.homedetail = (req, res) => {
-  const homeId = req.params.id;
-  Home.findById(homeId)
-    .then((home) => {
-      if (!home) return res.status(404).send("Home not found");
-      res.render("store/home-details", {
-        home: home,
-        pageTitle: home.houseName,
-        currentPage: homeId,
-      });
-    })
-    .catch((err) => {
-      console.log("❌ Error:", err.message);
-      res.status(500).send("Server Error");
+exports.homedetail = async (req, res) => {
+  try {
+    const home = await Home.findById(req.params.id);
+    if (!home) return res.status(404).send("Home not found");
+    res.render("store/home-details", {
+      home,
+      pageTitle: home.houseName,
+      currentPage: req.params.id,
     });
+  } catch (err) {
+    res.status(500).send("Server Error");
+  }
 };

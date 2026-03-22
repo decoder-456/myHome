@@ -34,7 +34,6 @@ exports.postSignup = async (req, res) => {
     await user.save();
     res.redirect("/login");
   } catch (err) {
-    console.log("❌ Signup error:", err.message);
     res.status(500).send("Something went wrong");
   }
 };
@@ -77,13 +76,11 @@ exports.postLogin = async (req, res) => {
     };
     req.session.save((err) => {
       if (err) {
-        console.log(err);
         return res.status(500).send("Session save failed");
       }
       res.redirect("/");
     });
   } catch (err) {
-    console.log("❌ Login error:", err.message);
     res.status(500).send("Something went wrong");
   }
 };

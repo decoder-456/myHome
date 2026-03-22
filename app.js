@@ -3,11 +3,7 @@ require("dotenv").config();
 const path = require("path");
 const express = require("express");
 const session = require("express-session");
-const multer = require("multer");
 const mongoose = require("mongoose");
-
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
-const cloudinary = require("./utils/cloudinary");
 
 const MongoDBStore = require("connect-mongodb-session")(session);
 
@@ -49,34 +45,6 @@ app.use((req, res, next) => {
 });
 
 // =======================
-// MULTER + CLOUDINARY
-// =======================
-
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: "uploads",
-    resource_type: "image",
-    allowed_formats: ["jpg", "jpeg", "png"],
-    public_id: (req, file) => {
-      const userId = req.session.user?.id || "guest";
-      return userId + "-" + Date.now();
-    },
-  },
-});
-
-const fileFilter = (req, file, cb) => {
-  if (["image/jpeg", "image/jpg", "image/png"].includes(file.mimetype)) {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
-
-// MULTER MIDDLEWARE
-app.use(multer({ storage, fileFilter }).single("photoUrl"));
-
-// =======================
 // VIEW ENGINE & MIDDLEWARE
 // =======================
 
@@ -106,7 +74,7 @@ mongoose
   .then(() => {
     console.log("✅ MongoDB connected");
     app.listen(PORT, () => {
-      console.log(`🚀 Server running at http://localhost:${PORT}`);
+      console.log(`🚀 Server running`);
     });
   })
   .catch((err) => {

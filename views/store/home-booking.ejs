@@ -4,63 +4,65 @@
 <body class="bg-gray-50 min-h-screen">
 <%- include('../partials/nav') %>
 
-<main class="container mx-auto px-6 py-10 max-w-6xl">
-
-  <div class="mb-8">
-    <h1 class="text-2xl font-bold text-gray-900">❤️ Saved Homes</h1>
-    <p class="text-gray-400 text-sm mt-1">Homes you've saved for later</p>
+<!-- Header -->
+<div style="background: linear-gradient(135deg,#f0fdf4 0%,#ecfdf5 100%);" class="py-10 px-6 border-b border-emerald-100">
+  <div class="container mx-auto max-w-6xl">
+    <h1 class="text-3xl font-extrabold text-gray-900">My Bookings</h1>
+    <p class="text-gray-500 text-sm mt-1">Homes you've saved and plan to visit</p>
   </div>
+</div>
+
+<main class="container mx-auto px-6 py-10 max-w-6xl">
 
   <% if (homes.length === 0) { %>
     <div class="flex flex-col items-center justify-center py-28 text-center">
-      <span class="text-6xl mb-4">🤍</span>
-      <p class="text-lg font-semibold text-gray-500 mb-1">No saved homes yet</p>
-      <p class="text-sm text-gray-400 mb-6">Explore homes and save the ones you love</p>
-      <a href="/explore"
-        class="bg-red-500 hover:bg-red-600 text-white px-6 py-2.5 rounded-xl text-sm font-semibold transition shadow-sm">
+      <div class="w-20 h-20 rounded-3xl flex items-center justify-center text-4xl mb-5" style="background:#f0fdf4;">📋</div>
+      <p class="text-xl font-semibold text-gray-700 mb-2">No bookings yet</p>
+      <p class="text-sm text-gray-400 mb-8">Save homes you love and they'll appear here</p>
+      <a href="/explore" class="text-white px-6 py-3 rounded-2xl text-sm font-semibold transition shadow-md hover:opacity-90"
+        style="background: linear-gradient(135deg,#059669,#10b981);">
         Explore homes
       </a>
     </div>
-
   <% } else { %>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      <% homes.forEach(home => { %>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <% homes.forEach(home => { %>
 
-        <div class="relative group">
+      <div class="relative group">
+        <form action="/del-favourite/<%= home._id %>" method="POST" class="absolute top-3 right-3 z-10">
+          <button type="submit" title="Remove"
+            class="bg-white/90 backdrop-blur-sm p-2.5 rounded-full shadow-md hover:bg-rose-50 hover:scale-110 transition-all duration-200 text-rose-500 text-sm font-bold">
+            ❤️
+          </button>
+        </form>
 
-          <!-- Remove from saved -->
-          <form action="/del-favourite/<%= home._id %>" method="POST"
-            class="absolute top-3 right-3 z-10">
-            <button type="submit" title="Remove from saved"
-              class="bg-white/90 backdrop-blur-sm p-2 rounded-full shadow hover:bg-red-50 hover:scale-110 transition-all duration-200 text-base">
-              ❤️
-            </button>
-          </form>
-
-          <a href="/store/home/<%= home._id %>">
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-              <div class="overflow-hidden h-48">
-                <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>"
-                  class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
-              </div>
-              <div class="p-4">
-                <div class="flex justify-between items-start mb-1">
-                  <h3 class="text-sm font-bold text-gray-900 truncate pr-2"><%= home.houseName %></h3>
-                  <span class="text-xs text-gray-500 shrink-0">⭐ <%= home.rating %></span>
-                </div>
-                <p class="text-gray-400 text-xs mb-3 truncate">📍 <%= home.location %></p>
-                <p class="text-sm font-bold text-red-500">
-                  ₹<%= home.price %> <span class="font-normal text-gray-400 text-xs">/ night</span>
-                </p>
-              </div>
+        <a href="/store/home/<%= home._id %>">
+          <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div class="relative h-48 overflow-hidden">
+              <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>"
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+              <span class="absolute top-3 left-3 bg-white/95 text-amber-500 text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
+                ⭐ <%= home.rating %>
+              </span>
+              <span class="absolute bottom-3 right-3 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow"
+                style="background:rgba(5,150,105,0.85); backdrop-filter:blur(4px);">
+                Saved
+              </span>
             </div>
-          </a>
+            <div class="p-4">
+              <h3 class="text-sm font-bold text-gray-900 truncate mb-1"><%= home.houseName %></h3>
+              <p class="text-gray-400 text-xs mb-3 truncate">📍 <%= home.location %></p>
+              <p class="text-sm font-bold text-gray-900">
+                ₹<%= home.price %> <span class="font-normal text-gray-400 text-xs">/ night</span>
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
 
-        </div>
-
-      <% }) %>
-    </div>
+    <% }) %>
+  </div>
 
   <% } %>
 

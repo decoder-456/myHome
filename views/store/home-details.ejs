@@ -5,65 +5,57 @@
   <%- include('../partials/nav') %>
 
   <!-- Hero Image -->
-  <div class="w-full h-[50vh] overflow-hidden relative">
-    <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>"
-      class="w-full h-full object-cover"/>
-    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+  <div class="w-full h-[55vh] overflow-hidden relative">
+    <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>" class="w-full h-full object-cover"/>
+    <div class="absolute inset-0" style="background:linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);"></div>
 
-    <!-- Back button over image -->
     <a href="/explore"
       class="absolute top-5 left-5 bg-white/90 backdrop-blur-sm text-gray-700 hover:text-gray-900 text-sm font-medium px-4 py-2 rounded-full shadow transition flex items-center gap-1.5">
       ← Back
     </a>
 
-    <!-- Title overlay at bottom of image -->
-    <div class="absolute bottom-6 left-6 right-6">
-      <h1 class="text-3xl font-bold text-white drop-shadow-md"><%= home.houseName %></h1>
-      <div class="flex items-center gap-3 mt-1 text-white/90 text-sm">
-        <span>⭐ <strong><%= home.rating %></strong> / 5</span>
-        <span class="opacity-50">·</span>
+    <div class="absolute bottom-6 left-6 right-6 max-w-5xl mx-auto">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="bg-white/20 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1 rounded-full border border-white/30">
+          🏠 Entire home
+        </span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-bold text-white drop-shadow-lg"><%= home.houseName %></h1>
+      <div class="flex items-center gap-3 mt-2 text-white/90 text-sm">
+        <span class="flex items-center gap-1">⭐ <strong><%= home.rating %></strong> / 5</span>
+        <span class="opacity-40">·</span>
         <span>📍 <%= home.location %></span>
       </div>
     </div>
   </div>
 
   <main class="container mx-auto px-4 max-w-5xl py-10">
-
     <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
 
-      <!-- Left: Details -->
+      <!-- Left -->
       <div class="md:col-span-2 space-y-8">
 
-        <!-- Host badge -->
-        <div class="flex items-center gap-3 pb-6 border-b border-gray-100">
-          <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-xl">🏠</div>
-          <div>
-            <p class="font-semibold text-gray-900 text-sm">Entire home</p>
-            <p class="text-gray-400 text-xs">Hosted privately</p>
+        <!-- Stat pills -->
+        <div class="grid grid-cols-3 gap-3">
+          <div class="rounded-2xl p-4 text-center border" style="background:#fff1f2; border-color:#fecdd3;">
+            <p class="text-xl mb-1">📍</p>
+            <p class="text-xs text-rose-400 uppercase tracking-wide font-medium">Location</p>
+            <p class="text-sm font-bold text-gray-800 mt-0.5 truncate"><%= home.location %></p>
           </div>
-        </div>
-
-        <!-- Highlights -->
-        <div class="grid grid-cols-3 gap-4">
-          <div class="flex flex-col items-center bg-white border border-gray-100 rounded-2xl p-4 text-center shadow-sm">
-            <span class="text-2xl mb-1">📍</span>
-            <p class="text-xs text-gray-400 uppercase tracking-wide">Location</p>
-            <p class="text-sm font-semibold text-gray-800 mt-0.5 truncate w-full text-center"><%= home.location %></p>
+          <div class="rounded-2xl p-4 text-center border" style="background:#fffbeb; border-color:#fde68a;">
+            <p class="text-xl mb-1">⭐</p>
+            <p class="text-xs text-amber-500 uppercase tracking-wide font-medium">Rating</p>
+            <p class="text-sm font-bold text-gray-800 mt-0.5"><%= home.rating %> / 5</p>
           </div>
-          <div class="flex flex-col items-center bg-white border border-gray-100 rounded-2xl p-4 text-center shadow-sm">
-            <span class="text-2xl mb-1">⭐</span>
-            <p class="text-xs text-gray-400 uppercase tracking-wide">Rating</p>
-            <p class="text-sm font-semibold text-gray-800 mt-0.5"><%= home.rating %> / 5</p>
-          </div>
-          <div class="flex flex-col items-center bg-white border border-gray-100 rounded-2xl p-4 text-center shadow-sm">
-            <span class="text-2xl mb-1">💰</span>
-            <p class="text-xs text-gray-400 uppercase tracking-wide">Per Night</p>
-            <p class="text-sm font-semibold text-gray-800 mt-0.5">₹<%= home.price %></p>
+          <div class="rounded-2xl p-4 text-center border" style="background:#f0fdf4; border-color:#bbf7d0;">
+            <p class="text-xl mb-1">💰</p>
+            <p class="text-xs text-emerald-500 uppercase tracking-wide font-medium">Per Night</p>
+            <p class="text-sm font-bold text-gray-800 mt-0.5">₹<%= home.price %></p>
           </div>
         </div>
 
         <!-- Description -->
-        <div>
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
           <h2 class="text-lg font-bold text-gray-900 mb-3">About this place</h2>
           <% if (home.description) { %>
             <p class="text-gray-600 leading-relaxed text-sm"><%= home.description %></p>
@@ -72,28 +64,15 @@
           <% } %>
         </div>
 
-        <!-- What this place offers (static) -->
-        <div>
+        <!-- Amenities -->
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
           <h2 class="text-lg font-bold text-gray-900 mb-4">What this place offers</h2>
-          <div class="grid grid-cols-2 gap-3">
-            <div class="flex items-center gap-3 text-sm text-gray-600">
-              <span class="text-lg">🛜</span> Free WiFi
-            </div>
-            <div class="flex items-center gap-3 text-sm text-gray-600">
-              <span class="text-lg">🅿️</span> Free parking
-            </div>
-            <div class="flex items-center gap-3 text-sm text-gray-600">
-              <span class="text-lg">❄️</span> Air conditioning
-            </div>
-            <div class="flex items-center gap-3 text-sm text-gray-600">
-              <span class="text-lg">🍳</span> Kitchen
-            </div>
-            <div class="flex items-center gap-3 text-sm text-gray-600">
-              <span class="text-lg">🧺</span> Washer
-            </div>
-            <div class="flex items-center gap-3 text-sm text-gray-600">
-              <span class="text-lg">📺</span> TV
-            </div>
+          <div class="grid grid-cols-2 gap-y-3 gap-x-4">
+            <% [['🛜','Free WiFi'],['🅿️','Free parking'],['❄️','Air conditioning'],['🍳','Kitchen'],['🧺','Washer'],['📺','TV']].forEach(([icon,label]) => { %>
+              <div class="flex items-center gap-3 text-sm text-gray-600 bg-gray-50 rounded-xl px-3 py-2.5">
+                <span class="text-lg"><%= icon %></span> <%= label %>
+              </div>
+            <% }) %>
           </div>
         </div>
 
@@ -102,21 +81,21 @@
       <!-- Right: Booking Card -->
       <div class="md:col-span-1">
         <div class="bg-white border border-gray-200 rounded-3xl shadow-xl p-6 sticky top-24">
-
           <div class="mb-5">
             <p class="text-3xl font-bold text-gray-900">
               ₹<%= home.price %>
               <span class="text-base font-normal text-gray-400">/ night</span>
             </p>
-            <div class="flex items-center gap-1 text-sm text-gray-400 mt-1">
-              ⭐ <span class="font-semibold text-gray-700 ml-0.5"><%= home.rating %></span>
-              <span class="mx-1 text-gray-200">·</span>
-              <span class="text-gray-400 text-xs">Excellent</span>
+            <div class="flex items-center gap-1.5 mt-1">
+              <span class="text-amber-400 text-sm">⭐</span>
+              <span class="font-semibold text-gray-700 text-sm"><%= home.rating %></span>
+              <span class="text-gray-300 text-xs">·</span>
+              <span class="text-xs text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full font-medium">Excellent</span>
             </div>
           </div>
 
-          <!-- Date pickers (UI only) -->
-          <div class="border border-gray-200 rounded-2xl overflow-hidden mb-4 text-sm">
+          <!-- Date pickers -->
+          <div class="border border-gray-200 rounded-2xl overflow-hidden mb-4">
             <div class="grid grid-cols-2 divide-x divide-gray-200">
               <div class="p-3">
                 <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Check-in</p>
@@ -129,7 +108,8 @@
             </div>
           </div>
 
-          <button class="w-full bg-gradient-to-r from-red-500 to-rose-500 hover:from-red-600 hover:to-rose-600 text-white py-3.5 rounded-2xl font-semibold transition duration-200 shadow-md mb-3 text-sm">
+          <button class="w-full text-white py-3.5 rounded-2xl font-semibold transition shadow-md mb-3 text-sm hover:opacity-90"
+            style="background: linear-gradient(135deg,#e11d48,#f97316);">
             Reserve Now
           </button>
 
@@ -137,7 +117,7 @@
           <form action="/favourite" method="POST">
             <input type="hidden" name="homeId" value="<%= home._id %>">
             <button type="submit"
-              class="w-full border-2 border-gray-200 hover:border-red-300 hover:bg-red-50 hover:text-red-500 text-gray-500 py-3 rounded-2xl font-medium transition duration-200 text-sm">
+              class="w-full border-2 border-rose-200 hover:bg-rose-50 text-rose-500 py-3 rounded-2xl font-medium transition text-sm">
               ❤️ Save to Favourites
             </button>
           </form>
@@ -148,8 +128,6 @@
       </div>
 
     </div>
-
   </main>
-
 </body>
 </html>
