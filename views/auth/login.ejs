@@ -24,11 +24,14 @@
       </div>
 
       <!-- Error -->
-      <% if (typeof error !== 'undefined' && error) { %>
-        <div class="mb-5 bg-rose-50 border border-rose-200 text-rose-600 text-sm px-4 py-3 rounded-xl flex items-center gap-2 animate-pulse">
-          ⚠️ <%= error %>
-        </div>
-      <% } %>
+
+<% if (errors && errors.length > 0) { %>
+  <div class="mb-5 bg-rose-50 border border-rose-200 p-3 rounded-xl space-y-1">
+    <% errors.forEach(err => { %>
+      <p class="text-rose-600 text-sm">⚠️ <%= err.msg %></p>
+    <% }) %>
+  </div>
+<% } %>
 
       <!-- Form -->
       <form action="/login" method="POST" class="space-y-5">
@@ -62,7 +65,7 @@
           type="submit"
           class="w-full py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-rose-500 to-orange-400 hover:from-rose-600 hover:to-orange-500 active:scale-[0.98] transition-all duration-200 shadow-md hover:shadow-lg"
         >
-          Sign In
+         Login
         </button>
 
       </form>
