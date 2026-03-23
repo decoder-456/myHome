@@ -32,13 +32,6 @@ exports.addHome = (req, res, next) => {
 // =======================
 exports.homeAdded = async (req, res, next) => {
   try {
-    console.log("ENV CHECK:");
-    console.log("CLOUD:", process.env.CLOUDINARY_CLOUD_NAME);
-    console.log("KEY:", process.env.CLOUDINARY_API_KEY);
-    console.log("SECRET:", process.env.CLOUDINARY_API_SECRET);
-
-    console.log("FILE:", req.file);
-    console.log("BODY:", req.body);
     if (!req.session.user) {
       return res.redirect("/login");
     }
